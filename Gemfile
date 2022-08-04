@@ -82,3 +82,5 @@ gem "devise", "~> 4.8"
 gem "slim", "~> 4.1"
 
 gem "slim-rails", "~> 3.5"
+
+gem 'image_processing', '~> 1.2'
