@@ -1,0 +1,23 @@
+p style="color: green" = notice
+
+#search.mt-5
+= form_with url: listings_path, method: :get do |form|
+  .input-group
+    span.input-group-text Guests no less than
+    = form.select "search[guests]", 1..10, {}, { class: 'form-select' }
+    span.input-group-text City of
+    = form.text_field "search[city]", class: 'form-control'
+    span.input-group-text Free between
+    = form.date_field "search[start_date]", value: Date.today, class: 'form-control'
+    = form.date_field "search[end_date]", class: 'form-control'
+    = form.submit "Find", class: 'btn btn-primary'
+
+#listings.mt-5
+  - @listings.in_groups_of(3) do |listings_row|
+    .card-group
+      - listings_row.compact.each do |listing|
+        .card id="#{dom_id listing}"
+          == render listing do
+            = link_to "Book this listing", listing, class: 'btn btn-primary'
+
+= link_to "New listing", new_listing_path, class: 'mt-5 btn btn-secondary'

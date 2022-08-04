@@ -1,0 +1,38 @@
+.card-header
+  strong=< listing.name
+.card-body
+  == image_tag listing.image.variant(:medium), class: 'card-img-top' if listing.image.present?
+  ul.list-group
+    li.list-group-item
+      strong Guests:
+      =< listing.guests
+    li.list-group-item
+      strong Bedrooms:
+      =< listing.bedrooms
+    li.list-group-item
+      strong Bathrooms:
+      =< listing.bathrooms
+    li.list-group-item
+      strong City:
+      =< listing.city
+    li.list-group-item
+      strong Country:
+      =< listing.country
+    li.list-group-item
+      strong Street:
+      =< listing.street
+    li.list-group-item
+      strong Apt number:
+      =< listing.apt_number
+    li.list-group-item
+      strong Description:
+      =< listing.description
+    li.list-group-item
+      strong User:
+      =< listing.user_id
+    - listing.reservations.each do |r|
+      li.list-group-item
+        strong Reserved:
+        =< "from #{r.start_date} until #{r.end_date}"
+.card-footer
+  = yield

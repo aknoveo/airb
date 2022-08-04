@@ -1,0 +1,24 @@
+p style="color: green" = notice
+
+div.card id="#{dom_id @listing}"
+  == render @listing
+
+div.input-group
+  = link_to "Edit this listing", edit_listing_path(@listing), class: 'btn btn-outline-secondary'
+  = link_to "Back to listings", listings_path, class: 'btn btn-outline-secondary'
+  = button_to "Destroy this listing", @listing, method: :delete, class: 'btn btn-outline-secondary'
+
+div.mt-5.mb-5
+  = form_with model: @reservation do |form|
+    = form.hidden_field :listing_id, value: @listing.id
+    .row.g-3.align-items-center
+      .col-auto
+        = form.label :start_date, class: 'col-form-label'
+      .col-auto
+        = form.date_field "reservation[start_date]", class: 'form-control'
+      .col-auto
+        = form.label :end_date
+      .col-auto
+        = form.date_field "reservation[end_date]", class: 'form-control'
+      .col-auto
+        = form.submit "Book", class: 'btn btn-primary'

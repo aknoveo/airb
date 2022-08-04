@@ -1,0 +1,14 @@
+.container
+  .row
+    .col-6.d-flex.justify-content-start
+      nav.navbar
+        = link_to "Air", root_path, class: "navbar-brand"
+    .col-6.d-flex.justify-content-end
+      nav.navbar
+        - if user_signed_in? 
+          ul.nav.me-auto.mb-2.mb-lg-0
+            li.nav-item
+              .btn
+                = current_user.email
+            li.nav-item
+              = button_to "Log out", destroy_user_session_path,  method: :delete, class: 'btn nav-link'
