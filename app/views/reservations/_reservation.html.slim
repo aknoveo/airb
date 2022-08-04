@@ -1,0 +1,9 @@
+div id="#{dom_id reservation}"
+- if reservation&.listing
+  == render reservation.listing
+p
+  strong Booked from:
+  =< reservation&.start_date.to_s
+p
+  strong Booked until:
+  =< reservation&.end_date.to_s
