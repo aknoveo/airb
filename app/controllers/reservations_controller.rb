@@ -23,7 +23,7 @@ class ReservationsController < ApplicationController
     end_date = Date.parse(reservation_params.dig(:reservation, :end_date))
     listing_id = reservation_params.dig(:listing_id)
 
-    @reservation = Reservation.new(start_date: start_date, end_date: end_date, listing_id: listing_id)
+    @reservation = Reservation.new(start_date: start_date, end_date: end_date, listing_id: listing_id, user: current_user)
 
     respond_to do |format|
       if @reservation.save
@@ -68,6 +68,6 @@ class ReservationsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def reservation_params
-    params.fetch(:reservation, {})
+    params.require(:reservation).permit(:listing_id, :user_id, reservation: [:start_date, :end_date, :guests])
   end
 end

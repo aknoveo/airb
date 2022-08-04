@@ -21,8 +21,15 @@ class Listing < ApplicationRecord
     guests = params[:guests].to_i
     city = params[:city].to_s
 
-    joins("LEFT OUTER JOIN reservations ON reservations.listing_id=listings.id AND ((reservations.start_date, reservations.end_date) OVERLAPS ('#{start_date}', '#{end_date}'))").where(
-      '(not ((reservations.start_date, reservations.end_date) OVERLAPS (?, ?)) OR (reservations.start_date IS NULL OR reservations.end_date IS NULL)) AND listings.guests >= ? AND lower(listings.city) like ?', start_date, end_date, guests, "%#{city}%"
-    )
+    joins("LEFT OUTER JOIN reservations
+           ON reservations.listing_id=listings.id
+           AND ((reservations.start_date, reservations.end_date)
+           OVERLAPS ('#{start_date}', '#{end_date}'))")
+    .where('(NOT ((reservations.start_date, reservations.end_date)
+           OVERLAPS (?, ?))
+           OR (reservations.start_date IS NULL OR reservations.end_date IS NULL))
+           AND listings.guests >= ?
+           AND lower(listings.city) like ?', start_date, end_date, guests, "%#{city}%"
+          )
   end
 end
