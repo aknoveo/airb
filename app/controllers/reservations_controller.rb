@@ -19,15 +19,11 @@ class ReservationsController < ApplicationController
 
   # POST /reservations or /reservations.json
   def create
-    start_date = Date.parse(reservation_params.dig(:reservation, :start_date))
-    end_date = Date.parse(reservation_params.dig(:reservation, :end_date))
-    listing_id = reservation_params.dig(:listing_id)
-
-    @reservation = Reservation.new(start_date: start_date, end_date: end_date, listing_id: listing_id, user: current_user)
+    @reservation = current_user.reservations.build(reservation_params)
 
     respond_to do |format|
       if @reservation.save
-        format.html { redirect_to reservation_url(@reservation), notice: 'Reservation was successfully created.' }
+        format.html { redirect_to listing_url(@reservation.listing), notice: 'Reservation was successfully created.' }
         format.json { render :show, status: :created, location: @reservation }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -68,6 +64,6 @@ class ReservationsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def reservation_params
-    params.require(:reservation).permit(:listing_id, :user_id, reservation: [:start_date, :end_date, :guests])
+    params.require(:reservation).permit(:listing_id, :user_id, :start_date, :end_date)
   end
 end

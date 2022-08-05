@@ -4,12 +4,12 @@ p style="color: green" = notice
 = form_with url: listings_path, method: :get do |form|
   .input-group
     span.input-group-text Guests no less than
-    = form.select "search[guests]", 1..10, {}, { class: 'form-select' }
+    = form.select "search[guests]", 1..10, { selected: params.dig(:search, :guests)}, { class: 'form-select' }
     span.input-group-text City of
-    = form.text_field "search[city]", class: 'form-control'
+    = form.text_field "search[city]", value: params.dig(:search, :city), class: 'form-control'
     span.input-group-text Free between
-    = form.date_field "search[start_date]", value: Date.today, class: 'form-control'
-    = form.date_field "search[end_date]", class: 'form-control'
+    = form.date_field "search[start_date]", value: params.dig(:search, :start_date) || Date.today, class: 'form-control'
+    = form.date_field "search[end_date]", value: params.dig(:search, :end_date), class: 'form-control'
     = form.submit "Find", class: 'btn btn-primary'
 
 #listings.mt-5
