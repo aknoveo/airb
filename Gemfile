@@ -57,6 +57,8 @@ group :development, :test do
   gem "pry"
   gem "pry-rails"
   gem "pry-byebug"
+  gem "rspec-rails"
+  gem "faker"
 end
 
 group :development do
@@ -75,6 +77,8 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem "factory_bot_rails"
+  gem "database_cleaner-active_record"
 end
 
 gem "devise", "~> 4.8"
