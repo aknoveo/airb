@@ -13,6 +13,7 @@ class Listing < ApplicationRecord
     end
   end
 
+  # rubocop:disable Metrics/MethodLength
   def self.search(params)
     return Listing.all if params.blank?
 
@@ -25,11 +26,11 @@ class Listing < ApplicationRecord
            ON reservations.listing_id=listings.id
            AND ((reservations.start_date, reservations.end_date)
            OVERLAPS ('#{start_date}', '#{end_date}'))")
-    .where('(NOT ((reservations.start_date, reservations.end_date)
-           OVERLAPS (?, ?))
-           OR (reservations.start_date IS NULL OR reservations.end_date IS NULL))
-           AND listings.guests >= ?
-           AND lower(listings.city) like ?', start_date, end_date, guests, "%#{city}%"
-          )
+      .where('(NOT ((reservations.start_date, reservations.end_date)
+             OVERLAPS (?, ?))
+             OR (reservations.start_date IS NULL OR reservations.end_date IS NULL))
+             AND listings.guests >= ?
+             AND lower(listings.city) like ?', start_date, end_date, guests, "%#{city}%")
   end
+  # rubocop:enable Metrics/MethodLength
 end

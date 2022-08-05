@@ -1,5 +1,5 @@
 class ReservationsController < ApplicationController
-  before_action :set_reservation, only: %i[show edit update destroy]
+  before_action :set_reservation, only: %i(show edit update destroy)
 
   # GET /reservations or /reservations.json
   def index
@@ -18,6 +18,7 @@ class ReservationsController < ApplicationController
   def edit; end
 
   # POST /reservations or /reservations.json
+  # rubocop:disable Metrics/AbcSize
   def create
     @reservation = current_user.reservations.build(reservation_params)
 
@@ -31,6 +32,7 @@ class ReservationsController < ApplicationController
       end
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   # PATCH/PUT /reservations/1 or /reservations/1.json
   def update
